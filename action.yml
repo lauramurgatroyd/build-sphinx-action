@@ -25,6 +25,10 @@ inputs:
     description: 'Name of the project''s Conda package'
     required: false
     default: ${{ github.event.repository.name }}
+  package_conda_channels:
+    description: 'conda channels needed to install package. Spearate each channel with -c.'
+    required: False
+    default: conda-forge
 outputs:
   filepath:
     description: 'The file path of the generated HTML documentation'
@@ -48,6 +52,7 @@ runs:
         fi
         echo ""
         echo "Selecting Build Env yml File"
+
         if [ ${{ inputs.conda_build_env_filepath }} = 'action_default' ]; then
           echo "Using the default conda configuration"
           CONDA_BUILD_ENV_FILE="${{ github.action_path }}/envs/build-docs.yml"
@@ -77,10 +82,8 @@ runs:
         echo "Set source"
         source ${{ inputs.base_env_prefix }}/etc/profile.d/conda.sh
         echo "-----------------"
-        echo "Setting up ${{ github.event.repository.name }}-build environment"
-        conda env update --name ${{ github.event.repository.name }}-build \
-                         --file "${CONDA_BUILD_ENV_FILE}"  || \
-            conda env create -f "${CONDA_BUILD_ENV_FILE}"
+
+        conda create -n 
         conda activate ${{ github.event.repository.name }}-build
         conda install conda-build
         ls -al ${{ inputs.package_folder_path }}
@@ -91,10 +94,15 @@ runs:
           mkdir -p "${CHANNEL_PATH}"
           cp ${{ inputs.package_folder_path }}/${{ inputs.package_name }}-*.bz2 ${CHANNEL_PATH}
           conda index "${CHANNEL_PATH}"
-          conda install -c "${CHANNEL_PATH}" ${{ inputs.package_name }}
+          conda install -c "${CHANNEL_PATH}" ${{ inputs.package_name }} -c ${{inputs.package_conda_channels}}
         else
           echo "Did not install project package"
         fi
+
+        echo "Setting up ${{ github.event.repository.name }}-build environment"
+        conda env update --name ${{ github.event.repository.name }}-build \
+                         --file "${CONDA_BUILD_ENV_FILE}"
+        
         echo ""
         echo "conda info"
         conda info
@@ -115,7 +123,7 @@ runs:
     - uses: actions/upload-artifact@v2
       with:
         name: ${{ inputs.artifact_name }}
-        path: docs/build/html
+        path: ${{ inputs.docs_path }}/build/html
 branding:
   icon: 'book-open'
   color: 'blue'
