@@ -111,8 +111,7 @@ runs:
         conda list
 
         
-        cd /usr/share/miniconda/envs/CIL-build/lib/python3.7/site-packages/cil
-        ls -R
+        cat /usr/share/miniconda/envs/CIL-build/lib/python3.7/site-packages/cil/version.py
 
         echo ""
         echo "BUILD DOCS"
