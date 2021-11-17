@@ -83,7 +83,7 @@ runs:
         source ${{ inputs.base_env_prefix }}/etc/profile.d/conda.sh
         echo "-----------------"
 
-        conda create -n 
+        conda create -n ${{ github.event.repository.name }}-build
         conda activate ${{ github.event.repository.name }}-build
         conda install conda-build
         ls -al ${{ inputs.package_folder_path }}
