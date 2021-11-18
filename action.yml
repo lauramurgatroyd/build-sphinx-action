@@ -114,9 +114,6 @@ runs:
         echo "conda list"
         conda list
 
-        
-        cat /usr/share/miniconda/envs/CIL-build/lib/python3.7/site-packages/cil/version.py
-
         echo ""
         echo "BUILD DOCS"
         echo "----------"
