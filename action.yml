@@ -29,6 +29,10 @@ inputs:
     description: 'conda channels needed to install package. Spearate each channel with -c.'
     required: False
     default: conda-forge
+  build_folder_name:
+    description: 'docs will be built inside docs_path in a folder with this name.'
+    required: False
+    default: 'build/html'
 outputs:
   filepath:
     description: 'The file path of the generated HTML documentation'
@@ -120,13 +124,13 @@ runs:
         if [ -e "./setup_source.sh" ]; then
           ./setup_source.sh
         fi
-        make html
-        echo "::set-output name=filepath::$(echo '${{ inputs.docs_path }}/build/html')"
+        sphinx-build source ${{ inputs.build_folder_name }}
+        echo "::set-output name=filepath::$(echo '${{ inputs.docs_path }}/${{ inputs.build_folder_name }')"
       shell: bash -l {0}
     - uses: actions/upload-artifact@v2
       with:
         name: ${{ inputs.artifact_name }}
-        path: ${{ inputs.docs_path }}/build/html
+        path: ${{ inputs.docs_path }}/${{ inputs.build_folder_name}
 branding:
   icon: 'book-open'
   color: 'blue'
