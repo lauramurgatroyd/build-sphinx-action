@@ -94,11 +94,7 @@ runs:
         echo "----------------"
         if [ -a ${{ inputs.package_folder_path }}/${{ inputs.package_name }}-*.bz2 ]; then
           echo "Installing project package"
-          CHANNEL_PATH="${{runner.temp}}/channel/linux-64"
-          mkdir -p "${CHANNEL_PATH}"
-          cp ${{ inputs.package_folder_path }}/${{ inputs.package_name }}-*.bz2 ${CHANNEL_PATH}
-          conda index "${CHANNEL_PATH}"
-          conda install -c "${CHANNEL_PATH}" ${{ inputs.package_name }} -c ${{inputs.package_conda_channels}}
+          conda install ${{ inputs.package_folder_path }}/${{ inputs.package_name }}-*.bz2 -c ${{inputs.package_conda_channels}}
         else
           echo "Did not install project package"
         fi
