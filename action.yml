@@ -91,6 +91,7 @@ runs:
         conda create -n ${{ github.event.repository.name }}-build python=3.7 -c conda-forge
         conda env update --name ${{ github.event.repository.name }}-build \
                          --file "${CONDA_BUILD_ENV_FILE}"
+        conda activate ${{ github.event.repository.name }}-build
         conda install conda-build
         ls -al ${{ inputs.package_folder_path }}
         echo "----------------"
