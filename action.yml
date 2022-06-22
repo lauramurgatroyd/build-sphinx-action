@@ -86,9 +86,11 @@ runs:
         echo "Set source"
         source ${{ inputs.base_env_prefix }}/etc/profile.d/conda.sh
         echo "-----------------"
-
+        
+        echo "Setting up ${{ github.event.repository.name }}-build environment"
         conda create -n ${{ github.event.repository.name }}-build python=3.7 -c conda-forge
-        conda activate ${{ github.event.repository.name }}-build
+        conda env update --name ${{ github.event.repository.name }}-build \
+                         --file "${CONDA_BUILD_ENV_FILE}"
         conda install conda-build
         ls -al ${{ inputs.package_folder_path }}
         echo "----------------"
@@ -99,9 +101,7 @@ runs:
           echo "Did not install project package"
         fi
 
-        echo "Setting up ${{ github.event.repository.name }}-build environment"
-        conda env update --name ${{ github.event.repository.name }}-build \
-                         --file "${CONDA_BUILD_ENV_FILE}"
+
         
         echo ""
         echo "conda info"
