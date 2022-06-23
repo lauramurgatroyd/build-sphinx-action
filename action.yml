@@ -103,7 +103,11 @@ runs:
           cp ${{ inputs.package_folder_path }}/${{ inputs.package_name }}-*.bz2 ${CHANNEL_PATH}
           ls -al ${CHANNEL_PATH}
           conda index "${CHANNEL_PATH}"
+          echo "SHOW CHANNELS"
           conda config --show channels
+          echo "SEARCHING CHANNEL"
+          conda search -c ${CHANNEL_PATH} ${{ inputs.package_name }} | grep channel
+          conda search -c ${CHANNEL_PATH} ${{ inputs.package_name }}
           conda install -c "${CHANNEL_PATH}" ${{ inputs.package_name }} -c ${{inputs.package_conda_channels}}
         else
           echo "Did not install project package"
