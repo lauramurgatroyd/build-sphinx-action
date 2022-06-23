@@ -88,6 +88,7 @@ runs:
         echo "-----------------"
         
         echo "Setting up ${{ github.event.repository.name }}-build environment"
+        conda config --set channel_priority true
         conda create -n ${{ github.event.repository.name }}-build python=3.7 -c conda-forge
         conda env update --name ${{ github.event.repository.name }}-build \
                          --file "${CONDA_BUILD_ENV_FILE}"
