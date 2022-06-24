@@ -90,8 +90,7 @@ runs:
         echo "Setting up ${{ github.event.repository.name }}-build environment"
         conda config --set channel_priority true
         conda create -n ${{ github.event.repository.name }}-build python=3.7 -c conda-forge
-        conda env update --name ${{ github.event.repository.name }}-build \
-                         --file "${CONDA_BUILD_ENV_FILE}"
+
         conda activate ${{ github.event.repository.name }}-build
         conda install conda-build -c conda-forge
         ls -al ${{ inputs.package_folder_path }}
@@ -108,10 +107,13 @@ runs:
           echo "SEARCHING CHANNEL"
           conda search -c ${CHANNEL_PATH} ${{ inputs.package_name }} | grep channel
           conda search -c ${CHANNEL_PATH} ${{ inputs.package_name }}
-          conda install -c "${CHANNEL_PATH}" ${{ inputs.package_name }} -c ${{inputs.package_conda_channels}}
+          conda install ${{ inputs.package_name }} -c "${CHANNEL_PATH}" -c ${{inputs.package_conda_channels}}
         else
           echo "Did not install project package"
         fi
+        
+        conda env update --name ${{ github.event.repository.name }}-build \
+          --file "${CONDA_BUILD_ENV_FILE}"
 
 
         
