@@ -107,7 +107,7 @@ runs:
           echo "SEARCHING CHANNEL"
           conda search -c ${CHANNEL_PATH} ${{ inputs.package_name }} | grep channel
           conda search -c ${CHANNEL_PATH} ${{ inputs.package_name }}
-          VERSION_STRING=basename $${CHANNEL_PATH} .tar.bz2 | tr '-' '='
+          VERSION_STRING=basename ${CHANNEL_PATH} .tar.bz2 | tr '-' '='
           conda install ${{ inputs.package_name }}=$VERSION_STRING -c "${CHANNEL_PATH}" -c ${{inputs.package_conda_channels}}
         else
           echo "Did not install project package"
