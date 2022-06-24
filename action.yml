@@ -108,7 +108,10 @@ runs:
           conda search -c ${CHANNEL_PATH} ${{ inputs.package_name }} | grep channel
           conda search -c ${CHANNEL_PATH} ${{ inputs.package_name }}
           PACKAGE_FILE=$(ls ${CHANNEL_PATH})
+          echo "PACKAGE FILE"
+          echo $PACKAGE_FILE
           VERSION_STRING=$(basename ${PACKAGE_FILE} .tar.bz2 | tr '-' '=')
+          echo $VERSION_STRING
           conda install $VERSION_STRING -c "${CHANNEL_PATH}" -c ${{inputs.package_conda_channels}}
         else
           echo "Did not install project package"
