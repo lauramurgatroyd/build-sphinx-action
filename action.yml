@@ -107,7 +107,7 @@ runs:
           echo "SEARCHING CHANNEL"
           conda search -c ${CHANNEL_PATH} ${{ inputs.package_name }} | grep channel
           conda search -c ${CHANNEL_PATH} ${{ inputs.package_name }}
-          PACKAGE_FILE=$(ls ${CHANNEL_PATH})
+          PACKAGE_FILE=$(ls ${CHANNEL_PATH}/${{ inputs.package_name }}-*.bz2)
           echo "PACKAGE FILE"
           echo $PACKAGE_FILE
           VERSION_STRING=$(basename ${PACKAGE_FILE} .tar.bz2 | tr '-' '=')
