@@ -1,3 +1,6 @@
+v0.1.1
+* Force installation of package from artifact by retrieving version string
+
 v0.0.1
 * Change order of conda env setup so that built package is installed before packages in the environment.yml are.
 * Add package_conda_channels variable which sets the conda channels used when installing the built package.
