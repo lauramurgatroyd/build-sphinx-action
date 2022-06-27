@@ -1,3 +1,9 @@
+v0.1.1
+* Force install from artifact by setting version of package (by retrieving version string from tar.bz2 file)
+* Add print statements to show files being copied, conda channel being created, and version being retrieved
+* Install conda-build from conda-forge
+
+
 v0.0.1
 * Change order of conda env setup so that built package is installed before packages in the environment.yml are.
 * Add package_conda_channels variable which sets the conda channels used when installing the built package.

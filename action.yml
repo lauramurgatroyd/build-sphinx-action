@@ -86,10 +86,13 @@ runs:
         echo "Set source"
         source ${{ inputs.base_env_prefix }}/etc/profile.d/conda.sh
         echo "-----------------"
-
+        
+        echo "Setting up ${{ github.event.repository.name }}-build environment"
+        conda config --set channel_priority true
         conda create -n ${{ github.event.repository.name }}-build python=3.7 -c conda-forge
+
         conda activate ${{ github.event.repository.name }}-build
-        conda install conda-build
+        conda install conda-build -c conda-forge
         ls -al ${{ inputs.package_folder_path }}
         echo "----------------"
         if [ -a ${{ inputs.package_folder_path }}/${{ inputs.package_name }}-*.bz2 ]; then
@@ -97,15 +100,26 @@ runs:
           CHANNEL_PATH="${{runner.temp}}/channel/linux-64"
           mkdir -p "${CHANNEL_PATH}"
           cp ${{ inputs.package_folder_path }}/${{ inputs.package_name }}-*.bz2 ${CHANNEL_PATH}
+          ls -al ${CHANNEL_PATH}
           conda index "${CHANNEL_PATH}"
-          conda install -c "${CHANNEL_PATH}" ${{ inputs.package_name }} -c ${{inputs.package_conda_channels}}
+          echo "SHOW CHANNELS"
+          conda config --show channels
+          echo "SEARCHING CHANNEL"
+          conda search -c ${CHANNEL_PATH} ${{ inputs.package_name }}
+          PACKAGE_FILE=$(ls ${CHANNEL_PATH}/${{ inputs.package_name }}-*.bz2)
+          echo "PACKAGE FILE"
+          echo $PACKAGE_FILE
+          VERSION_STRING=$(basename ${PACKAGE_FILE} .tar.bz2 | tr '-' '=')
+          echo $VERSION_STRING
+          conda install $VERSION_STRING -c "${CHANNEL_PATH}" -c ${{inputs.package_conda_channels}}
         else
           echo "Did not install project package"
         fi
-
-        echo "Setting up ${{ github.event.repository.name }}-build environment"
+        
         conda env update --name ${{ github.event.repository.name }}-build \
-                         --file "${CONDA_BUILD_ENV_FILE}"
+          --file "${CONDA_BUILD_ENV_FILE}"
+
+
         
         echo ""
         echo "conda info"
