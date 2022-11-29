@@ -40,7 +40,7 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v3.0.1
       with:
         path: artifacts
     - id: main
