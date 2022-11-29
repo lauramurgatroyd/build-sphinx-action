@@ -138,7 +138,7 @@ runs:
         sphinx-build source build/${{ inputs.build_subdir_name }}
         echo "::set-output name=filepath::$(echo '${{ inputs.docs_path }}/build')"
       shell: bash -l {0}
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3.1.1
       with:
         name: ${{ inputs.artifact_name }}
         path: ${{ inputs.docs_path }}/build
