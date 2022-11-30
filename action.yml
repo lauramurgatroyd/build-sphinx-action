@@ -45,7 +45,7 @@ runs:
         path: artifacts
     - id: main
       run: |
-        echo "::set-output name=filepath::$(echo "None")"
+        echo  "filepath=$(echo "None") >> $GITHUB_OUTPUT"
         echo "CHECKS"
         echo "------"
         if [ -d ${{ inputs.docs_path }} ]; then
@@ -136,7 +136,7 @@ runs:
           ./setup_source.sh
         fi
         sphinx-build source build/${{ inputs.build_subdir_name }}
-        echo "::set-output name=filepath::$(echo '${{ inputs.docs_path }}/build')"
+        echo "filepath=$(echo '${{ inputs.docs_path }}/build') >> $GITHUB_OUTPUT"
       shell: bash -l {0}
     - uses: actions/upload-artifact@v3.1.1
       with:
