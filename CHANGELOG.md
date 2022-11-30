@@ -1,3 +1,7 @@
+v0.1.2
+* Updates actions/upload-artifact to v3.1.1
+* Updates actions/download-artifact to v3.0.1
+
 v0.1.1
 * Force install from artifact by setting version of package (by retrieving version string from tar.bz2 file)
 * Add print statements to show files being copied, conda channel being created, and version being retrieved
