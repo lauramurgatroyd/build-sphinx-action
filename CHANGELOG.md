@@ -1,3 +1,6 @@
+v0.1.3
+* Remove use of set-output due to deprecation: https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
+
 v0.1.2
 * Updates actions/upload-artifact to v3.1.1
 * Updates actions/download-artifact to v3.0.1
