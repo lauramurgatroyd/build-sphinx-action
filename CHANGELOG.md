@@ -1,3 +1,6 @@
+v0.1.4
+* Allows user to specify which python version they want the action to work with. Defaults to 3.7.
+
 v0.1.3
 * Remove use of set-output due to deprecation: https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
 
