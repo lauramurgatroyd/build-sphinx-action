@@ -36,7 +36,7 @@ inputs:
   python_version:
     description: 'Version of Python to use to build documentation'
     required: False
-    default: 3.9
+    default: 3.7
 outputs:
   filepath:
     description: 'The file path of the generated HTML documentation'
